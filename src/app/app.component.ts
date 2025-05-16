@@ -9,8 +9,8 @@ import { FavoritesService } from './services/favorites.service';
   imports: [ItemManagerComponent, FavoritesIconComponent, FavoritesModalComponent],
   template: `
     <div class="min-h-screen bg-gray-50">
-      <header class="bg-brand shadow p-4 flex items-center justify-between sticky top-0 z-50">
-        <h1 class="text-2xl font-bold text-white">Wallapop</h1>
+      <header class="bg-white shadow p-4 flex items-center justify-between sticky top-0 z-50">
+          <img src="/wallapop.png" alt="Wallapop Logo" class="h-10 w-auto" />
         <app-favorites-icon (openModal)="openFavoritesModal()" [favoritesCount]="favorites().length"></app-favorites-icon>
       </header>
       <main class="p-4 max-w-3xl mx-auto">
