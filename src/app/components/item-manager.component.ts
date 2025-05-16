@@ -1,6 +1,7 @@
 import { Component, signal, computed, inject, effect } from '@angular/core';
 import { ItemListComponent } from './item-list.component';
 import { ItemService } from '../services/item.service';
+import { Item } from '../interfaces/item.interface';
 
 @Component({
   selector: 'app-item-manager',
@@ -11,7 +12,7 @@ import { ItemService } from '../services/item.service';
         <input type="text" placeholder="Search by title, description, price, or email" class="flex-1 p-2 border rounded" [value]="searchTerm()" (input)="searchTerm.set($any($event.target).value)" autocomplete="off" />
         <button type="submit" class="bg-brand text-white px-4 py-2 rounded cursor-pointer">Search</button>
       </form>
-      <app-item-list [items]="filteredItems" (scrolledToEnd)="loadNextPage()" [loading]="loading"></app-item-list>
+      <app-item-list [items]="filteredItems()" (scrolledToEnd)="loadNextPage()" [loading]="loading" [allLoaded]="allLoaded"></app-item-list>
     </section>
   `
 })
@@ -20,11 +21,11 @@ export class ItemManagerComponent {
   searchTerm = signal('');
   page = signal(1);
   private itemService = inject(ItemService);
-  private pageSize = 5;
+  private pageSize = 6;
   public loading = false;
-  private allLoaded = false;
+  public allLoaded = false;
 
-  filteredItems = computed(() => {
+  filteredItems = computed<Item[]>(() => {
     const term = this.searchTerm().toLowerCase();
     const items = this.allItems();
     if (!term) return items;
