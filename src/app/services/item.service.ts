@@ -1,27 +1,38 @@
-import { Injectable, signal } from '@angular/core';
-import { MOCK_ITEMS } from '../mocks/mock-items';
+
+import { Injectable } from '@angular/core';
 import { Item } from '../interfaces/item.interface';
+
+// Helper to fake loading delay
+function fakeDelay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 @Injectable({ providedIn: 'root' })
 export class ItemService {
-    private itemsSignal = signal<Item[]>(MOCK_ITEMS);
+    private apiUrl = '/data.json';
+    private itemsCache: Item[] | null = null;
 
-    // Simulate async fetch
-    fetchItems(): Promise<Item[]> {
-        return new Promise(resolve => {
-            setTimeout(() => resolve(this.itemsSignal()), 1000);
-        });
+
+    // Fetch items from data.json (with cache)
+    async fetchItems(): Promise<Item[]> {
+        await fakeDelay(1000); // 1 second fake loading
+        if (this.itemsCache) {
+            return this.itemsCache;
+        }
+        const response = await fetch(this.apiUrl);
+        const data = await response.json();
+        // If data.json has { items: [...] }
+        const items: Item[] = Array.isArray(data) ? data : data.items;
+        this.itemsCache = items;
+        return items;
     }
 
-    // Simulate async paginated fetch
-    fetchItemsPage(page: number, pageSize: number): Promise<Item[]> {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                const all = this.itemsSignal();
-                const start = (page - 1) * pageSize;
-                const end = start + pageSize;
-                resolve(all.slice(start, end));
-            }, 1000);
-        });
+    // Fetch paginated items from data.json
+    async fetchItemsPage(page: number, pageSize: number): Promise<Item[]> {
+        await fakeDelay(1000); // 1 second fake loading
+        const all = await this.fetchItems();
+        const start = (page - 1) * pageSize;
+        const end = start + pageSize;
+        return all.slice(start, end);
     }
 }

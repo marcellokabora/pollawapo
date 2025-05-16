@@ -1,34 +1,35 @@
-import { Component, signal, inject, computed } from '@angular/core';
-import { ItemManagerComponent } from './components/item-manager.component';
+
+import { Component } from '@angular/core';
+import { ItemListComponent } from './components/item-list.component';
 import { FavoritesIconComponent } from './components/favorites-icon.component';
-import { FavoritesModalComponent } from './components/favorites-modal.component';
-import { FavoritesService } from './services/favorites.service';
+import { SearchInputComponent } from './components/search-input.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [ItemManagerComponent, FavoritesIconComponent, FavoritesModalComponent],
+  imports: [FavoritesIconComponent, FormsModule, SearchInputComponent, ItemListComponent],
   template: `
-    <div class="min-h-screen bg-gray-50">
-      <header class="bg-white shadow p-4 flex items-center justify-between sticky top-0 z-50">
-          <img src="/wallapop.png" alt="Wallapop Logo" class="h-10 w-auto" />
-        <app-favorites-icon (openModal)="openFavoritesModal()" [favoritesCount]="favorites().length"></app-favorites-icon>
+    <div class="min-h-screen bg-gray-50 flex flex-col">
+      <header class="bg-white shadow p-4 sticky top-0 z-50">
+        <div class="container max-w-2xl mx-auto flex items-center justify-between w-full">
+          <div class="flex items-center min-w-0 flex-shrink-0">
+            <div class="overflow-hidden flex items-center justify-start w-10 sm:w-full h-10">
+              <img src="/wallapop.png" alt="Wallapop Logo" class="h-10 w-auto block object-left w-10 h-10 object-cover object-left" />
+            </div>
+          </div>
+          <div class="flex-1 flex justify-center px-2">
+            <app-search-input></app-search-input>
+          </div>
+          <app-favorites-icon></app-favorites-icon>
+        </div>
       </header>
-      <main class="p-4 max-w-3xl mx-auto">
-        <app-item-manager></app-item-manager>
+      <main class="p-4 max-w-3xl mx-auto flex-grow">
+        <app-item-list></app-item-list>
       </main>
-      <app-favorites-modal [open]="favoritesModalOpen()" [favorites]="favorites()" (close)="closeFavoritesModal()"></app-favorites-modal>
+      <footer class="bg-white shadow p-4 flex items-center justify-center mt-8">
+        <img src="/wallapop.png" alt="Wallapop Logo" class="h-10 w-auto" />
+      </footer>
     </div>
   `
 })
-export class AppComponent {
-  favoritesModalOpen = signal(false);
-  public favoritesService = inject(FavoritesService);
-  favorites = computed(() => this.favoritesService.favorites());
-
-  openFavoritesModal() {
-    this.favoritesModalOpen.set(true);
-  }
-  closeFavoritesModal() {
-    this.favoritesModalOpen.set(false);
-  }
-}
+export class AppComponent { }

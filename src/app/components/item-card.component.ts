@@ -9,7 +9,7 @@ import { Item } from '../interfaces/item.interface';
   imports: [CurrencyPipe],
   template: `
     <div class="bg-white rounded shadow p-4 flex flex-col gap-2">
-      <img [src]="item().image" alt="Item image" class="w-full h-40 object-cover rounded" />
+      <img [src]="'/img/' + item().image" alt="Item image" class="w-full h-40 object-cover rounded" />
       <h2 class="text-lg font-semibold">{{ item().title }}</h2>
       <p class="text-gray-600">{{ item().description }}</p>
       <div class="flex justify-between items-center">
