@@ -1,4 +1,4 @@
-import { Item } from './item.service';
+import { Item } from '../interfaces/item.interface';
 
 export const MOCK_ITEMS: Item[] = [
     {

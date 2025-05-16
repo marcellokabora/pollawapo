@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ItemManagerComponent } from './item-manager.component';
+import { ItemManagerComponent } from './components/item-manager.component';
 
 @Component({
   selector: 'app-root',

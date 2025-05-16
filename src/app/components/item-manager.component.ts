@@ -1,6 +1,6 @@
 import { Component, signal, computed, inject, effect } from '@angular/core';
 import { ItemListComponent } from './item-list.component';
-import { ItemService } from './item.service';
+import { ItemService } from '../services/item.service';
 
 @Component({
   selector: 'app-item-manager',

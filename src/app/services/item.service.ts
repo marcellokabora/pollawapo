@@ -1,25 +1,15 @@
-import { Injectable, computed, signal } from '@angular/core';
-import { MOCK_ITEMS } from './mock-items';
-
-export interface Item {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    email: string;
-    image: string;
-}
+import { Injectable, signal } from '@angular/core';
+import { MOCK_ITEMS } from '../mocks/mock-items';
+import { Item } from '../interfaces/item.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ItemService {
     private itemsSignal = signal<Item[]>(MOCK_ITEMS);
 
-    getItems = computed(() => this.itemsSignal());
-
     // Simulate async fetch
     fetchItems(): Promise<Item[]> {
         return new Promise(resolve => {
-            setTimeout(() => resolve(this.itemsSignal()), 2000);
+            setTimeout(() => resolve(this.itemsSignal()), 1000);
         });
     }
 
@@ -31,7 +21,7 @@ export class ItemService {
                 const start = (page - 1) * pageSize;
                 const end = start + pageSize;
                 resolve(all.slice(start, end));
-            }, 500);
+            }, 1000);
         });
     }
 }
