@@ -1,7 +1,9 @@
 import { Injectable, signal, computed, effect, inject } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ItemService } from './item.service';
 import { Item } from '../interfaces/item.interface';
 import { ActivatedRoute } from '@angular/router';
+import { SearchQueryService } from './search-query.service';
 
 @Injectable({ providedIn: 'root' })
 export class ManagerService {
@@ -12,6 +14,9 @@ export class ManagerService {
     private pageSize = 5;
     public loading = false;
     public allLoaded = false;
+
+    private searchQuery = inject(SearchQueryService);
+    private searchSub: Subscription;
 
     filteredItems = computed<Item[]>(() => {
         const term = (this.searchTerm() || '').toLowerCase();
@@ -29,6 +34,12 @@ export class ManagerService {
         const route = inject(ActivatedRoute);
         route.queryParamMap.subscribe(params => {
             const search = params.get('search') || '';
+            this.searchTerm.set(search);
+            this.page.set(1);
+        });
+
+        // Subscribe to search query changes and update searchTerm and page
+        this.searchSub = this.searchQuery.search$.subscribe((search) => {
             this.searchTerm.set(search);
             this.page.set(1);
         });
@@ -65,6 +76,10 @@ export class ManagerService {
             }
             this.loading = false;
         });
+    }
+
+    ngOnDestroy() {
+        this.searchSub?.unsubscribe();
     }
 
     loadNextPage() {
