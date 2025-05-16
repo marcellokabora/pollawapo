@@ -19,9 +19,9 @@ import { Item } from '../interfaces/item.interface';
         <span class="ml-2 text-brand">Loading...</span>
       </div>
     }
-    @if (!loading && allLoaded()) {
+    @if (!loading() && allLoaded()) {
       <div class="flex justify-center py-4 text-gray-500">
-        <span>All items loaded</span>
+        <span>All items are loaded</span>
       </div>
     }
   `

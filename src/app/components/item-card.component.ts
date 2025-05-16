@@ -19,7 +19,7 @@ import { Item } from '../interfaces/item.interface';
       @if (!isFavorite()) {
         <button (click)="addToFavorites()" class="mt-2 bg-brand text-white px-3 py-1 rounded">Add to Favorites</button>
       } @else {
-        <button disabled class="mt-2 bg-gray-300 text-gray-600 px-3 py-1 rounded">Favorited</button>
+        <button (click)="removeFromFavorites()" class="mt-2 bg-pink-500 text-white px-3 py-1 rounded">Remove from Favorites</button>
       }
     </div>
   `
@@ -34,5 +34,9 @@ export class ItemCardComponent {
 
   addToFavorites() {
     this.favoritesService.addToFavorites(this.item());
+  }
+
+  removeFromFavorites() {
+    this.favoritesService.removeFromFavorites(this.item().id);
   }
 }

@@ -6,7 +6,7 @@ import { Item } from '../interfaces/item.interface';
   selector: 'app-favorites-modal',
   template: `
     @if (open()) {
-      <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+      <div class="fixed inset-0 bg-black/80 bg-opacity-40 flex items-center justify-center z-50 px-4">
         <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
           <button (click)="close.emit()" class="absolute top-2 right-2 w-10 h-10 flex items-center justify-center cursor-pointer text-2xl bg-gray-200 rounded-full shadow hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" aria-label="Close modal">&times;</button>
           <h3 class="text-xl font-bold mb-4">Favorites</h3>

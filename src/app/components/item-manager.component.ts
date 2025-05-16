@@ -21,7 +21,7 @@ export class ItemManagerComponent {
   searchTerm = signal('');
   page = signal(1);
   private itemService = inject(ItemService);
-  private pageSize = 6;
+  private pageSize = 5;
   public loading = false;
   public allLoaded = false;
 
