@@ -9,18 +9,21 @@ export class FavoritesService {
         return computed(() => this.favoritesSignal());
     }
 
+
     addToFavorites(item: Item) {
-        if (!this.favoritesSignal().some(fav => fav.id === item.id)) {
+        if (!this.favoritesSignal().some(fav => fav.title === item.title)) {
             this.favoritesSignal.set([...this.favoritesSignal(), item]);
         }
     }
 
-    removeFromFavorites(itemId: number) {
-        this.favoritesSignal.set(this.favoritesSignal().filter(fav => fav.id !== itemId));
+
+    removeFromFavorites(itemTitle: string) {
+        this.favoritesSignal.set(this.favoritesSignal().filter(fav => fav.title !== itemTitle));
     }
 
-    isFavorite(itemId: number): boolean {
-        return this.favoritesSignal().some(fav => fav.id === itemId);
+
+    isFavorite(itemTitle: string): boolean {
+        return this.favoritesSignal().some(fav => fav.title === itemTitle);
     }
 
     clearFavorites() {

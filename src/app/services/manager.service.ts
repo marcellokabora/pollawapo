@@ -26,29 +26,15 @@ export class ManagerService {
 
         effect(async () => {
             const page = this.page();
-            const term = (this.searchTerm() || '').toLowerCase();
+            const term = this.searchTerm();
             if (page === 1) {
                 this.allItems.set([]);
                 this.allLoaded = false;
             }
             if (this.allLoaded) return;
             this.loading = true;
-            let newItems: Item[] = [];
-            if (!term) {
-                newItems = await this.itemService.fetchItemsPage(page, this.pageSize);
-            } else {
-                const all = await this.itemService.fetchItems();
-                const filtered = all.filter(item =>
-                    item.title.toLowerCase().includes(term) ||
-                    item.description.toLowerCase().includes(term) ||
-                    item.price.toString().includes(term) ||
-                    item.email.toLowerCase().includes(term)
-                );
-                const start = (page - 1) * this.pageSize;
-                newItems = filtered.slice(start, start + this.pageSize);
-                if (start + this.pageSize >= filtered.length) this.allLoaded = true;
-            }
-            if (newItems.length < this.pageSize) this.allLoaded = true;
+            const { items: newItems, total } = await this.itemService.fetchItemsPage(page, this.pageSize, term);
+            if (newItems.length < this.pageSize || (page * this.pageSize) >= total) this.allLoaded = true;
             if (page === 1) {
                 this.allItems.set(newItems);
             } else {

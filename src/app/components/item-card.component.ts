@@ -45,7 +45,7 @@ export class ItemCardComponent {
   private favoritesService = inject(FavoritesService);
 
   isFavorite() {
-    return this.favoritesService.isFavorite(this.item().id);
+    return this.favoritesService.isFavorite(this.item().title);
   }
 
   addToFavorites() {
@@ -53,6 +53,6 @@ export class ItemCardComponent {
   }
 
   removeFromFavorites() {
-    this.favoritesService.removeFromFavorites(this.item().id);
+    this.favoritesService.removeFromFavorites(this.item().title);
   }
 }

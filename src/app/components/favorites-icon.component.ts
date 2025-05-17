@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
             <button (click)="closeFavoritesModal()" class="absolute top-2 right-2 w-10 h-10 flex items-center justify-center cursor-pointer text-2xl bg-gray-200 rounded-full shadow hover:bg-gray-300 transition-all pb-1" aria-label="Close modal">&times;</button>
             <h3 class="text-xl font-bold mb-4">Favorites</h3>
             @if (favorites().length > 0) {
-              @for (fav of favorites(); track fav.id) {
+              @for (fav of favorites(); track fav.title) {
                 <div class="flex items-center gap-2 mb-2">
                   <img [src]="'/img/'+fav.image" alt="Fav image" class="w-12 h-12 object-cover rounded" />
                   <span class="flex-1">{{ fav.title }}</span>
@@ -53,9 +53,9 @@ export class FavoritesIconComponent {
     this.favoritesModalOpen.set(false);
   }
   removeFavorite(fav: Item) {
-    this.favoritesService.removeFromFavorites(fav.id);
+    this.favoritesService.removeFromFavorites(fav.title);
   }
-  trackById(index: number, item: Item) {
-    return item.id;
+  trackByTitle(index: number, item: Item) {
+    return item.title;
   }
 }

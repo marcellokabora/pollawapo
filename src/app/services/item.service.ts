@@ -33,12 +33,30 @@ export class ItemService {
         return this.itemsPromise;
     }
 
-    // Fetch paginated items from data.json using Promise, always simulating delay
-    async fetchItemsPage(page: number, pageSize: number): Promise<Item[]> {
+    /**
+     * Fetch items with optional pagination and search.
+     * @param page Page number (1-based)
+     * @param pageSize Number of items per page
+     * @param searchTerm Optional search string to filter items by title or description
+     */
+    async fetchItemsPage(
+        page: number,
+        pageSize: number,
+        searchTerm?: string
+    ): Promise<{ items: Item[]; total: number }> {
         await new Promise(res => setTimeout(res, 1000)); // delay 1 second
-        const all = await this.fetchItems();
+        let all = await this.fetchItems();
+        if (searchTerm && searchTerm.trim() !== '') {
+            const term = searchTerm.trim().toLowerCase();
+            all = all.filter(item =>
+                item.title.toLowerCase().includes(term) ||
+                (item.description && item.description.toLowerCase().includes(term))
+            );
+        }
+        const total = all.length;
         const start = (page - 1) * pageSize;
         const end = start + pageSize;
-        return all.slice(start, end);
+        const items = all.slice(start, end);
+        return { items, total };
     }
 }
