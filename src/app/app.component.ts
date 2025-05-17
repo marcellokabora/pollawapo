@@ -1,13 +1,12 @@
 
 import { Component } from '@angular/core';
 import { ItemListComponent } from './components/item-list.component';
-import { FavoritesIconComponent } from './components/favorites-icon.component';
+import { FavoritesComponent } from './components/favorites.component';
 import { SearchInputComponent } from './components/search-input.component';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [FavoritesIconComponent, FormsModule, SearchInputComponent, ItemListComponent],
+  imports: [FavoritesComponent, SearchInputComponent, ItemListComponent],
   template: `
     <div class="min-h-screen bg-gray-50 flex flex-col">
       <header class="bg-white shadow p-4 sticky top-0 z-50">
@@ -20,7 +19,7 @@ import { FormsModule } from '@angular/forms';
           <div class="flex-1 flex justify-center px-2">
             <app-search-input></app-search-input>
           </div>
-          <app-favorites-icon></app-favorites-icon>
+          <app-favorites></app-favorites>
         </div>
       </header>
       <main class="p-4 max-w-3xl mx-auto grow">

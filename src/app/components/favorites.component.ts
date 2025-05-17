@@ -3,11 +3,10 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { FavoritesService } from '../services/favorites.service';
 import { Item } from '../interfaces/item.interface';
 
-import { CommonModule } from '@angular/common';
 @Component({
-  selector: 'app-favorites-icon',
+  selector: 'app-favorites',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div>
       <button (click)="openFavoritesModal()" class="relative cursor-pointer">
@@ -20,9 +19,10 @@ import { CommonModule } from '@angular/common';
       </button>
 
       @if (favoritesModalOpen()) {
-        <div class="fixed inset-0 bg-black/80 bg-opacity-40 flex items-center justify-center z-50 px-4">
-          <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-            <button (click)="closeFavoritesModal()" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center cursor-pointer text-2xl bg-gray-200 rounded-full shadow hover:bg-gray-300 transition-all pb-1" aria-label="Close modal">&times;</button>
+        <div class="fixed inset-0 bg-black/50 z-40" (click)="closeFavoritesModal()"></div>
+        <div class="fixed inset-0 flex items-center justify-center z-50 px-4 pointer-events-none">
+          <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative max-h-[80vh] overflow-y-auto pointer-events-auto">
+            <button (click)="closeFavoritesModal()" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center cursor-pointer text-2xl rounded-full shadow hover:shadow-md transition-all pb-1" aria-label="Close modal">&times;</button>
             <h3 class="text-xl font-bold mb-4">Favorites</h3>
             @if (favorites().length > 0) {
               @for (fav of favorites(); track fav.title) {
@@ -41,7 +41,7 @@ import { CommonModule } from '@angular/common';
     </div>
   `
 })
-export class FavoritesIconComponent {
+export class FavoritesComponent {
   private favoritesService = inject(FavoritesService);
   favorites = this.favoritesService.favorites;
   favoritesModalOpen = signal(false);
@@ -54,8 +54,5 @@ export class FavoritesIconComponent {
   }
   removeFavorite(fav: Item) {
     this.favoritesService.removeFromFavorites(fav.title);
-  }
-  trackByTitle(index: number, item: Item) {
-    return item.title;
   }
 }

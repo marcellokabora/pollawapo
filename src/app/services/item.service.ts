@@ -50,7 +50,9 @@ export class ItemService {
             const term = searchTerm.trim().toLowerCase();
             all = all.filter(item =>
                 item.title.toLowerCase().includes(term) ||
-                (item.description && item.description.toLowerCase().includes(term))
+                (item.description && item.description.toLowerCase().includes(term)) ||
+                (item.price !== undefined && item.price.toString().toLowerCase().includes(term)) ||
+                (item.email && item.email.toLowerCase().includes(term))
             );
         }
         const total = all.length;

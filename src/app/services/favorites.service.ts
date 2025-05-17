@@ -9,13 +9,11 @@ export class FavoritesService {
         return computed(() => this.favoritesSignal());
     }
 
-
     addToFavorites(item: Item) {
         if (!this.favoritesSignal().some(fav => fav.title === item.title)) {
             this.favoritesSignal.set([...this.favoritesSignal(), item]);
         }
     }
-
 
     removeFromFavorites(itemTitle: string) {
         this.favoritesSignal.set(this.favoritesSignal().filter(fav => fav.title !== itemTitle));

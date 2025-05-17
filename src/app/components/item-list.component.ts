@@ -6,8 +6,13 @@ import { ManagerService } from '../services/manager.service';
   selector: 'app-item-list',
   imports: [ItemCardComponent],
   template: `
+    @if (!manager.loading && manager.allItems().length > 0 && manager.searchTerm() && manager.searchTerm().trim() !== '') {
+      <div class="text-sm text-gray-500 mb-3 text-center">
+        Found {{ manager.totalItems() }} item{{ manager.totalItems() === 1 ? '' : 's' }}.
+      </div>
+    }
     <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
-      @for (item of manager.allItems(); track item.id) {
+      @for (item of manager.allItems(); track item.title) {
         <app-item-card [item]="item"></app-item-card>
       }
     </div>

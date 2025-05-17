@@ -1,8 +1,7 @@
+
 import { Injectable, signal, effect, inject } from '@angular/core';
 import { ItemService } from './item.service';
 import { Item } from '../interfaces/item.interface';
-import { ActivatedRoute } from '@angular/router';
-
 
 @Injectable({ providedIn: 'root' })
 export class ManagerService {
@@ -10,6 +9,7 @@ export class ManagerService {
     searchTerm = signal('');
     allItems = signal<Item[]>([]);
     page = signal(1);
+    totalItems = signal(0);
 
     private itemService = inject(ItemService);
     private pageSize = 5;
@@ -17,23 +17,21 @@ export class ManagerService {
     public allLoaded = false;
 
     constructor() {
-        const route = inject(ActivatedRoute);
-        route.queryParamMap.subscribe(params => {
-            const search = params.get('search') || '';
-            this.searchTerm.set(search);
-            this.page.set(1);
-        });
-
+        // Effect runs whenever page or searchTerm changes
         effect(async () => {
             const page = this.page();
             const term = this.searchTerm();
+            // Reset items and loaded flag on new search
             if (page === 1) {
                 this.allItems.set([]);
                 this.allLoaded = false;
             }
             if (this.allLoaded) return;
             this.loading = true;
+            // Fetch items for current page and search term
             const { items: newItems, total } = await this.itemService.fetchItemsPage(page, this.pageSize, term);
+            this.totalItems.set(total);
+            // Mark allLoaded if no more items to fetch
             if (newItems.length < this.pageSize || (page * this.pageSize) >= total) this.allLoaded = true;
             if (page === 1) {
                 this.allItems.set(newItems);
@@ -44,6 +42,7 @@ export class ManagerService {
         });
     }
 
+    // Loads the next page of items if not already loading or fully loaded
     loadNextPage() {
         if (this.loading || this.allLoaded) return;
         this.page.set(this.page() + 1);

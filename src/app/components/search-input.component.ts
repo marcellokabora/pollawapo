@@ -1,12 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ManagerService } from '../services/manager.service';
+
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-search-input',
-    standalone: true,
-    imports: [FormsModule],
-    template: `
+  selector: 'app-search-input',
+  standalone: true,
+  imports: [FormsModule],
+  template: `
     <input
       type="text"
       placeholder="Search..."
@@ -17,23 +20,28 @@ import { ActivatedRoute, Router } from '@angular/router';
     />
   `,
 })
-export class SearchInputComponent implements OnInit {
-    currentSearch = '';
-    private route = inject(ActivatedRoute);
-    private router = inject(Router);
+export class SearchInputComponent implements OnInit, OnDestroy {
+  currentSearch = '';
+  manager = inject(ManagerService);
 
-    ngOnInit() {
-        // Initialize input from query params
-        this.route.queryParamMap.subscribe(params => {
-            this.currentSearch = params.get('search') || '';
-        });
-    }
+  private inputSubject = new Subject<string>();
+  private inputSub?: Subscription;
 
-    onInput(value: string) {
-        this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: { search: value || null },
-            queryParamsHandling: 'merge',
-        });
-    }
+  ngOnInit() {
+    this.currentSearch = this.manager.searchTerm();
+    this.inputSub = this.inputSubject
+      .pipe(debounceTime(300)) // Wait for 300ms after the last input
+      .subscribe((value) => {
+        this.manager.searchTerm.set(value);
+        this.manager.page.set(1);
+      });
+  }
+
+  ngOnDestroy() {
+    this.inputSub?.unsubscribe();
+  }
+
+  onInput(value: string) {
+    this.inputSubject.next(value);
+  }
 }
