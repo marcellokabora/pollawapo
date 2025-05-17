@@ -22,8 +22,8 @@ import { ManagerService } from '../services/manager.service';
     <div #anchor></div>
     @if (manager.loading) {
       <div class="flex justify-center py-4 mt-8">
-        <span class="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-brand"></span>
-        <span class="ml-2 text-brand">Loading...</span>
+        <span class="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-primary"></span>
+        <span class="ml-2 text-primary">Loading...</span>
       </div>
     }
   `

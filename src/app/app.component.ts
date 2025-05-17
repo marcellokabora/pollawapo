@@ -10,7 +10,7 @@ import { SearchInputComponent } from './components/search-input.component';
   template: `
     <div class="min-h-screen bg-gray-50 flex flex-col">
       <header class="bg-white shadow p-4 sticky top-0 z-50">
-        <div class="container max-w-2xl mx-auto flex items-center justify-between w-full">
+        <div class="container max-w-3xl mx-auto flex items-center justify-between w-full">
           <div class="flex items-center min-w-0 flex-shrink-0">
             <div class="overflow-hidden flex items-center justify-start w-10 sm:w-full h-10">
               <img src="/wallapop.png" alt="Wallapop Logo" class="h-10 w-auto block object-left w-10 h-10 object-cover object-left" />
