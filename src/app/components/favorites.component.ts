@@ -29,7 +29,7 @@ import { Item } from '../interfaces/item.interface';
                 <div class="flex items-center gap-4 mb-3 p-3 rounded-lg bg-gray-50 shadow-sm border border-gray-200 transition hover:shadow-md">
                   <img [src]="'/img/'+fav.image" alt="Fav image" class="w-14 h-14 object-cover rounded-lg border border-gray-300" />
                   <span class="flex-1 text-base font-medium text-gray-800">{{ fav.title }}</span>
-                  <button (click)="removeFavorite(fav)" class="px-3 py-1 rounded-full bg-red-100 text-red-600 font-semibold hover:bg-red-500 hover:text-white transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300">Remove</button>
+                  <button (click)="removeFavorite(fav)" class="px-3 py-1 rounded-full bg-red-100 text-red-600 font-semibold hover:bg-red-500 hover:text-white transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300 cursor-pointer">Remove</button>
                 </div>
               }
             } @else {

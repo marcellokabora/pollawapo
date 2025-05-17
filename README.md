@@ -1,10 +1,6 @@
 # Wallapop Tech Test
 
-## What is this about?
-
 The purpose of this test is to assess your ability to create a modern and functional single page application (SPA) using web technologies.
-
----
 
 ## Project Goal
 
@@ -17,16 +13,13 @@ Develop an Angular SPA that provides the following features:
 - **Favorites Modal**: Remove items from favorites without closing the modal. Favorites do **not** persist after reload.
 - **Infinite Scroll**: Show 5 items initially, load more as you scroll (total: 20 items).
 
----
-
 ## Tech Stack
 
-- [Angular](https://angular.io/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [MSW (Mock Service Worker)](https://mswjs.io/) for API mocking
-- [Jest](https://jestjs.io/) for testing
-
----
+- Angular 19.2.0
+- TypeScript 5.7.2
+- Tailwind 4.1.7
+- MSW 2.8.3
+- Jest 29.7.0
 
 ## Getting Started
 
@@ -51,25 +44,37 @@ Develop an Angular SPA that provides the following features:
    yarn install
    ```
 
-3. **Set up Mock Service Worker (MSW)**
-   - Ensure `msw` is installed (`npm install msw --save-dev`).
+3. **Set up Tailwind CSS**
+   - Tailwind is already configured in the project. If you need to re-install, run:
+     ```sh
+     npm install -D tailwindcss postcss autoprefixer
+     npx tailwindcss init
+     ```
+   - The main styles are in `src/styles.css` and Tailwind directives are included there.
+   - For more info, see [Tailwind CSS docs](https://tailwindcss.com/docs/guides/angular).
+
+
+4. **Set up Mock Service Worker (MSW)**
+   - MSW is already configured in the project. If you need to re-install, run:
+     ```sh
+     npm install msw --save-dev
+     ```
    - The mock handlers are configured to serve `tech-test-data/data.json` and images.
    - No changes are needed to `data.json`.
+   - For more info, see [MSW docs](https://mswjs.io/docs/getting-started).
 
-4. **Start the development server**
+5. **Start the development server**
    ```sh
    ng serve
    ```
    The app will be available at [http://localhost:4200](http://localhost:4200).
 
----
-
 ## Running Tests
 
-To run unit and integration tests:
+To run all unit and integration tests using Jest:
 
 ```sh
-ng test
+npm test
 ```
 
 To run end-to-end tests (if configured):
@@ -78,7 +83,13 @@ To run end-to-end tests (if configured):
 ng e2e
 ```
 
----
+## Testing
+
+- **Test Runner**: [Jest](https://jestjs.io/) is used for all unit and integration tests.
+- **Test Files**: Test files are located alongside their source files and use the `.spec.ts` suffix (e.g., `favorites.service.spec.ts`).
+- **Coverage**: Run `npm test -- --coverage` to generate a coverage report.
+- **Adding Tests**: Create new `.spec.ts` files next to the code you want to test. Follow existing test patterns for consistency.
+- **Mocking**: MSW is used to mock API responses during tests.
 
 ## Usage
 
@@ -86,51 +97,26 @@ ng e2e
 - **Infinite Scroll**: Scroll down to load more items (5 at a time).
 - **Favorites**: Click the "Add to Favorites" button on any item. Open the favorites modal via the floating button.
 - **Remove from Favorites**: In the modal, click the remove icon to delete items from your favorites list.
-- **Favorites Persistence**: The favorites list is cleared on page reload.
-
----
 
 ## Project Structure
 
 - `src/app/` - Main Angular application code
-- `tech-test-data/` - Contains `data.json` and item images
+  - `components/` - Angular components (item list, item card, search input, favorites modal, etc.)
+  - `services/` - Business logic and state management (favorites, item, manager services)
+  - `interfaces/` - TypeScript interfaces (e.g., `item.interface.ts`)
+- `src/styles.css` - Global styles and Tailwind CSS directives
 - `src/mocks/` - MSW handlers and service worker setup
-
----
+- `public/` - Static assets (images, service worker, logos)
+- `angular.json`, `tsconfig*.json` - Angular and TypeScript configuration files
+- `jest.config.js`, `setup-jest.ts` - Jest configuration and setup
+- `README.md` - Project documentation
 
 ## Key Decisions & Notes
 
+- **Tailwind CSS** is used for utility-first, responsive, and custom styling.
 - **MSW** is used to mock API responses from `data.json` for local development and testing.
-- **No external UI libraries** were used to keep the bundle size small and the UI custom.
+- **No external UI component libraries** were used to keep the bundle size small and the UI custom.
 - **Favorites** are managed in-memory (not persisted).
 - **Testing**: Unit tests cover components, services, and MSW integration.
 - **Responsive Design**: The app is fully responsive for mobile and desktop.
 - **Performance**: List rendering is optimized for smooth infinite scrolling.
-
----
-
-## Commit & Documentation Guidelines
-
-- Make frequent commits with clear, descriptive messages.
-- Document key decisions in this README or in commit messages.
-- Only add external libraries if absolutely necessary.
-- Maintain consistent code style and best practices.
-
----
-
-## How to Deliver
-
-- Push your solution to a private repository (GitHub, Bitbucket, or GitLab).
-- Include all necessary files and this README.
-- Test the compilation and app functionality before submission.
-
----
-
-## Troubleshooting
-
-- If you encounter issues with MSW, ensure the service worker is registered and running.
-- For any dependency issues, try deleting `node_modules` and reinstalling.
-
----
-
-## Enjoy the challenge!
