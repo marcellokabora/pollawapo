@@ -28,17 +28,23 @@ export class ManagerService {
             }
             if (this.allLoaded) return;
             this.loading = true;
-            // Fetch items for current page and search term
-            const { items: newItems, total } = await this.itemService.fetchItemsPage(page, this.pageSize, term);
-            this.totalItems.set(total);
-            // Mark allLoaded if no more items to fetch
-            if (newItems.length < this.pageSize || (page * this.pageSize) >= total) this.allLoaded = true;
-            if (page === 1) {
-                this.allItems.set(newItems);
-            } else {
-                this.allItems.set([...this.allItems(), ...newItems]);
+            try {
+                // Fetch items for current page and search term
+                const { items: newItems, total } = await this.itemService.fetchItemsPage(page, this.pageSize, term);
+                this.totalItems.set(total);
+                // Mark allLoaded if no more items to fetch
+                if (newItems.length < this.pageSize || (page * this.pageSize) >= total) this.allLoaded = true;
+                if (page === 1) {
+                    this.allItems.set(newItems);
+                } else {
+                    this.allItems.set([...this.allItems(), ...newItems]);
+                }
+            } catch (e) {
+                // On error, reset loading and keep items empty
+                this.allItems.set([]);
+            } finally {
+                this.loading = false;
             }
-            this.loading = false;
         });
     }
 

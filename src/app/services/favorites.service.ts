@@ -24,7 +24,4 @@ export class FavoritesService {
         return this.favoritesSignal().some(fav => fav.title === itemTitle);
     }
 
-    clearFavorites() {
-        this.favoritesSignal.set([]);
-    }
 }
