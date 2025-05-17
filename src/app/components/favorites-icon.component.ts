@@ -22,14 +22,14 @@ import { CommonModule } from '@angular/common';
       @if (favoritesModalOpen()) {
         <div class="fixed inset-0 bg-black/80 bg-opacity-40 flex items-center justify-center z-50 px-4">
           <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-            <button (click)="closeFavoritesModal()" class="absolute top-2 right-2 w-10 h-10 flex items-center justify-center cursor-pointer text-2xl bg-gray-200 rounded-full shadow hover:bg-gray-300 transition-all pb-1" aria-label="Close modal">&times;</button>
+            <button (click)="closeFavoritesModal()" class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center cursor-pointer text-2xl bg-gray-200 rounded-full shadow hover:bg-gray-300 transition-all pb-1" aria-label="Close modal">&times;</button>
             <h3 class="text-xl font-bold mb-4">Favorites</h3>
             @if (favorites().length > 0) {
               @for (fav of favorites(); track fav.title) {
-                <div class="flex items-center gap-2 mb-2">
-                  <img [src]="'/img/'+fav.image" alt="Fav image" class="w-12 h-12 object-cover rounded" />
-                  <span class="flex-1">{{ fav.title }}</span>
-                  <button (click)="removeFavorite(fav)" class="text-red-500 hover:underline cursor-pointer">Remove</button>
+                <div class="flex items-center gap-4 mb-3 p-3 rounded-lg bg-gray-50 shadow-sm border border-gray-200 transition hover:shadow-md">
+                  <img [src]="'/img/'+fav.image" alt="Fav image" class="w-14 h-14 object-cover rounded-lg border border-gray-300" />
+                  <span class="flex-1 text-base font-medium text-gray-800">{{ fav.title }}</span>
+                  <button (click)="removeFavorite(fav)" class="px-3 py-1 rounded-full bg-red-100 text-red-600 font-semibold hover:bg-red-500 hover:text-white transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-red-300">Remove</button>
                 </div>
               }
             } @else {
