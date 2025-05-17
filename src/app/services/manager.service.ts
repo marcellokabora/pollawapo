@@ -3,6 +3,7 @@ import { ItemService } from './item.service';
 import { Item } from '../interfaces/item.interface';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Injectable({ providedIn: 'root' })
 export class ManagerService {
 

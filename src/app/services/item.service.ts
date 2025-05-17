@@ -1,35 +1,41 @@
 
+
 import { Injectable } from '@angular/core';
 import { Item } from '../interfaces/item.interface';
 
-// Helper to fake loading delay
-function fakeDelay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 @Injectable({ providedIn: 'root' })
 export class ItemService {
-    private apiUrl = '/data.json';
+    // Use the MSW handler endpoint for the API
+    private apiUrl = '/api/items';
     private itemsCache: Item[] | null = null;
+    private itemsPromise: Promise<Item[]> | null = null;
 
+    constructor() { }
 
-    // Fetch items from data.json (with cache)
+    // Fetch items from data.json (with cache) using native fetch and Promise
     async fetchItems(): Promise<Item[]> {
-        await fakeDelay(1000); // 1 second fake loading
         if (this.itemsCache) {
             return this.itemsCache;
         }
-        const response = await fetch(this.apiUrl);
-        const data = await response.json();
-        // If data.json has { items: [...] }
-        const items: Item[] = Array.isArray(data) ? data : data.items;
-        this.itemsCache = items;
-        return items;
+        if (this.itemsPromise) {
+            return this.itemsPromise;
+        }
+        this.itemsPromise = (async () => {
+            const response = await fetch(this.apiUrl);
+            if (!response.ok) {
+                throw new Error('Failed to fetch items');
+            }
+            const data = await response.json();
+            const items = Array.isArray(data) ? (data as Item[]) : data.items;
+            this.itemsCache = items;
+            return items;
+        })();
+        return this.itemsPromise;
     }
 
-    // Fetch paginated items from data.json
+    // Fetch paginated items from data.json using Promise, always simulating delay
     async fetchItemsPage(page: number, pageSize: number): Promise<Item[]> {
-        await fakeDelay(1000); // 1 second fake loading
+        await new Promise(res => setTimeout(res, 1000)); // delay 1 second
         const all = await this.fetchItems();
         const start = (page - 1) * pageSize;
         const end = start + pageSize;
