@@ -7,16 +7,16 @@ import { ManagerService } from '../services/manager.service';
   imports: [ItemCardComponent],
   template: `
     <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
-      @for (item of manager.filteredItems(); track item.id) {
+      @for (item of manager.allItems(); track item.id) {
         <app-item-card [item]="item"></app-item-card>
       }
     </div>
-    @if (!manager.loading && manager.filteredItems().length === 0) {
+    @if (!manager.loading && manager.allItems().length === 0) {
       <div class="text-center text-gray-400 py-8">No products to were found.</div>
     }
     <div #anchor></div>
     @if (manager.loading) {
-      <div class="flex justify-center py-4">
+      <div class="flex justify-center py-4 mt-8">
         <span class="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-brand"></span>
         <span class="ml-2 text-brand">Loading...</span>
       </div>

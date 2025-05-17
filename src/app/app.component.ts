@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms';
           <app-favorites-icon></app-favorites-icon>
         </div>
       </header>
-      <main class="p-4 max-w-3xl mx-auto flex-grow">
+      <main class="p-4 max-w-3xl mx-auto grow">
         <app-item-list></app-item-list>
       </main>
       <footer class="bg-white shadow p-4 flex items-center justify-center mt-8">

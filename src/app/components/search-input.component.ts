@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SearchQueryService } from '../services/search-query.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-search-input',
@@ -17,23 +17,23 @@ import { SearchQueryService } from '../services/search-query.service';
     />
   `,
 })
-export class SearchInputComponent implements OnInit, OnDestroy {
+export class SearchInputComponent implements OnInit {
     currentSearch = '';
-    private searchQuery = inject(SearchQueryService);
-    private sub: any;
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
 
     ngOnInit() {
-        // Sync input with service
-        this.sub = this.searchQuery.search$.subscribe((search: string) => {
-            this.currentSearch = search;
+        // Initialize input from query params
+        this.route.queryParamMap.subscribe(params => {
+            this.currentSearch = params.get('search') || '';
         });
     }
 
-    ngOnDestroy() {
-        this.sub?.unsubscribe();
-    }
-
     onInput(value: string) {
-        this.searchQuery.setSearch(value);
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { search: value || null },
+            queryParamsHandling: 'merge',
+        });
     }
 }

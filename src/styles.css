@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
+:root {
+    --color: #2bceb4;
+    --font: 'Inter', sans-serif;
+}
+
 @theme {
-    --color-brand: #2bceb4;
-    --font-brand: 'Inter', sans-serif;
+    --color-brand: var(--color);
+    --font-brand: var(--font);
 }
