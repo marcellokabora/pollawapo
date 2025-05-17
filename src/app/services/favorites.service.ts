@@ -19,7 +19,6 @@ export class FavoritesService {
         this.favoritesSignal.set(this.favoritesSignal().filter(fav => fav.title !== itemTitle));
     }
 
-
     isFavorite(itemTitle: string): boolean {
         return this.favoritesSignal().some(fav => fav.title === itemTitle);
     }

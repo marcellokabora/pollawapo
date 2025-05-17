@@ -7,28 +7,27 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-input',
-  standalone: true,
   imports: [FormsModule],
   template: `
     <input
       type="text"
       placeholder="Search..."
       class="px-4 py-2 border-2 border-gray-200 rounded-full w-full sm:min-w-sm focus:border-teal-500 bg-white placeholder-gray-400 text-gray-800 transition-all duration-200 outline-none"
-      [(ngModel)]="currentSearch"
+      [(ngModel)]="search"
       (ngModelChange)="onInput($event)"
       autocomplete="off"
     />
   `,
 })
 export class SearchInputComponent implements OnInit, OnDestroy {
-  currentSearch = '';
+  search = '';
   manager = inject(ManagerService);
 
   private inputSubject = new Subject<string>();
   private inputSub?: Subscription;
 
   ngOnInit() {
-    this.currentSearch = this.manager.searchTerm();
+    this.search = this.manager.searchTerm();
     this.inputSub = this.inputSubject
       .pipe(debounceTime(300)) // Wait for 300ms after the last input
       .subscribe((value) => {
