@@ -13,7 +13,7 @@ import { SearchInputComponent } from './components/search-input.component';
         <div class="container max-w-3xl mx-auto flex items-center justify-between w-full">
           <div class="flex items-center min-w-0 flex-shrink-0">
             <div class="overflow-hidden flex items-center justify-start w-10 sm:w-full h-10">
-              <img src="/wallapop.png" alt="Wallapop Logo" class="h-10 w-auto block object-left w-10 h-10 object-cover object-left" />
+              <img src="/pollawapo.png" alt="Pollawapo Logo" class="h-10 w-auto block object-left w-10 h-10 object-cover object-left" />
             </div>
           </div>
           <div class="flex-1 flex justify-center px-2">
@@ -26,7 +26,7 @@ import { SearchInputComponent } from './components/search-input.component';
         <app-item-list></app-item-list>
       </main>
       <footer class="bg-white shadow p-4 flex items-center justify-center mt-8">
-        <img src="/wallapop.png" alt="Wallapop Logo" class="h-10 w-auto" />
+        <img src="/pollawapo.png" alt="Pollawapo Logo" class="h-10 w-auto" />
       </footer>
     </div>
   `

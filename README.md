@@ -1,4 +1,4 @@
-# Wallapop Tech Test
+# Pollawapo Tech Test
 
 The purpose of this test is to assess your ability to create a modern and functional single page application (SPA) using web technologies.
 
@@ -32,12 +32,14 @@ Develop an Angular SPA that provides the following features:
 ### Installation
 
 1. **Clone the repository**
+
    ```sh
-   git clone https://github.com/your-username/wallapop.git
-   cd wallapop
+   git clone https://github.com/your-username/pollawapo.git
+   cd pollawapo
    ```
 
 2. **Install dependencies**
+
    ```sh
    npm install
    # or
@@ -45,6 +47,7 @@ Develop an Angular SPA that provides the following features:
    ```
 
 3. **Set up Tailwind CSS**
+
    - Tailwind is already configured in the project. If you need to re-install, run:
      ```sh
      npm install -D tailwindcss postcss autoprefixer
@@ -53,8 +56,8 @@ Develop an Angular SPA that provides the following features:
    - The main styles are in `src/styles.css` and Tailwind directives are included there.
    - For more info, see [Tailwind CSS docs](https://tailwindcss.com/docs/guides/angular).
 
-
 4. **Set up Mock Service Worker (MSW)**
+
    - MSW is already configured in the project. If you need to re-install, run:
      ```sh
      npm install msw --save-dev
